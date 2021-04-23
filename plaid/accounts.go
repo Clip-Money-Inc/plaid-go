@@ -6,20 +6,28 @@ import (
 )
 
 type Account struct {
-	AccountID          string          `json:"account_id"`
-	Balances           AccountBalances `json:"balances"`
-	Mask               string          `json:"mask"`
-	Name               string          `json:"name"`
-	OfficialName       string          `json:"official_name"`
-	Subtype            string          `json:"subtype"`
-	Type               string          `json:"type"`
-	VerificationStatus string          `json:"verification_status"`
+	AccountID          string                      `json:"account_id"`
+	Balances           AccountBalances             `json:"balances"`
+	HistoricalBalances []AccountHistoricalBalances `json:"historical_balances"`
+	Mask               string                      `json:"mask"`
+	Name               string                      `json:"name"`
+	OfficialName       string                      `json:"official_name"`
+	Subtype            string                      `json:"subtype"`
+	Type               string                      `json:"type"`
+	VerificationStatus string                      `json:"verification_status"`
 }
 
 type AccountBalances struct {
 	Available              float64 `json:"available"`
 	Current                float64 `json:"current"`
 	Limit                  float64 `json:"limit"`
+	ISOCurrencyCode        string  `json:"iso_currency_code"`
+	UnofficialCurrencyCode string  `json:"unofficial_currency_code"`
+}
+
+type AccountHistoricalBalances struct {
+	Current                float64 `json:"current"`
+	Date                   string  `json:"date"`
 	ISOCurrencyCode        string  `json:"iso_currency_code"`
 	UnofficialCurrencyCode string  `json:"unofficial_currency_code"`
 }
@@ -80,7 +88,7 @@ type getAccountsRequest struct {
 type GetAccountsResponse struct {
 	APIResponse
 	Accounts []Account `json:"accounts"`
-	Item Item `json:"item"`
+	Item     Item      `json:"item"`
 }
 
 type GetAccountsOptions struct {
